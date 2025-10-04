@@ -14,6 +14,20 @@ use Illuminate\Support\Facades\Log;
 
 class CandidateController extends Controller
 {
+
+     /**
+     * Hiển thị danh sách ứng viên (CandidateController@index)
+     */
+    public function index()
+    {
+        // Lấy danh sách ứng viên, sắp xếp theo thời gian tạo mới nhất, và phân trang
+        $candidates = Candidate::latest()->paginate(10); 
+        
+        // Trả về view 'candidates.index' và truyền dữ liệu
+        return view('candidates.index', compact('candidates'));
+    }
+
+
     /**
      * Hiển thị form đăng ký hồ sơ mới.
      */
@@ -85,15 +99,5 @@ class CandidateController extends Controller
                 ->withInput()
                 ->with('error', 'Đã xảy ra lỗi hệ thống khi nộp hồ sơ. Vui lòng thử lại sau.');
         }
-    }
-
-    /**
-     * Hiển thị danh sách ứng viên (CandidateController@index)
-     */
-    public function index()
-    {
-        // Code quản lý danh sách ứng viên sẽ ở đây
-        // Ví dụ: $candidates = Candidate::latest()->paginate(10); 
-        // return view('candidates.index', compact('candidates'));
     }
 }

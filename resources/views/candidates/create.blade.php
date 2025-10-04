@@ -6,6 +6,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Đăng ký Hồ sơ Ứng viên</title>
     <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Thêm Alpine.js CDN -->
+    <script src="//unpkg.com/alpinejs" defer></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         /* Enhanced sparkle effect with more particles */
@@ -230,7 +232,8 @@
     <div class="orb"></div>
 
     <div
-        class="bg-white/10 backdrop-blur-lg rounded-2xl shadow-2xl border border-white/20 max-w-md w-full p-8 space-y-6 form-container">
+        class="bg-white/10 backdrop-blur-lg rounded-2xl shadow-2xl border border-white/20 max-w-md w-full p-8 space-y-6 form-container"
+        x-data="{ imageUrl: null }">
         <div class="text-center">
             <i class="fas fa-user-graduate text-6xl text-yellow-400 mb-4 animate-pulse"></i>
             <h1 class="text-3xl font-bold text-white mb-2">Đăng ký Hồ sơ Ứng viên</h1>
@@ -289,14 +292,22 @@
                 @enderror
             </div>
 
-            {{-- Ảnh đại diện (avatar) --}}
-            <div class="space-y-2">
+            {{-- Ảnh đại diện (avatar) VỚI PREVIEW ALPINE.JS --}}
+            <div class="space-y-4">
                 <label for="avatar" class="text-sm font-semibold text-white flex items-center">
                     <i class="fas fa-image text-pink-300 mr-2"></i>Ảnh đại diện (Max 2MB, định dạng ảnh)
                 </label>
-                {{-- Lưu ý: Không thể hiển thị lại old('avatar') cho input type file --}}
+                
+                <!-- Khu vực Preview Ảnh -->
+                <div x-show="imageUrl" class="flex justify-center mb-4">
+                    <img :src="imageUrl" alt="Ảnh đại diện" class="w-24 h-24 rounded-full object-cover shadow-xl border-4 border-white/50 transition-all duration-300">
+                </div>
+                
+                <!-- Input File và Alpine Logic -->
                 <input type="file" id="avatar" name="avatar" accept="image/*"
-                    class="w-full px-4 py-3 bg-white/10 border border-white/30 rounded-xl text-white file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-blue-500 file:text-white hover:file:bg-blue-600 transition-all duration-300">
+                    class="w-full px-4 py-3 bg-white/10 border border-white/30 rounded-xl text-white file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-blue-500 file:text-white hover:file:bg-blue-600 transition-all duration-300"
+                    @change="imageUrl = URL.createObjectURL($event.target.files[0])">
+                
                 @error('avatar')
                     <div class="error flex items-center text-red-400 text-sm">
                         <i class="fas fa-exclamation-circle mr-1"></i>{{ $message }}

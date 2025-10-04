@@ -34,7 +34,7 @@
             </div>
 
             <p style="text-align: center;">
-                <a href="{{ url('/candidates/' . $candidate->id) }}"
+                <a href="{{ url('/candidates') }}"
                     style="display: inline-block; padding: 10px 20px; margin-top: 15px; background-color: #10b981; color: #ffffff !important; text-decoration: none; border-radius: 5px; font-weight: bold;">
                     Xem Chi Tiết Ứng Viên
                 </a>
